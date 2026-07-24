@@ -1,0 +1,149 @@
+/* Brutalist-sport Aesthetics: Prateek's Academic Command Center */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
+
+:root {
+  --black: #0A0A0A;
+  --white: #F0F0EE;
+  --lime: #CAFF00;
+  --blue: #2B2BFF;
+  --grey: #1A1A1A;
+  --grey2: #2E2E2E;
+  --text-dim: #888880;
+
+  --font-display: 'Clash Display', 'Inter', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+  --border-subtle-dark: 1px solid rgba(0, 0, 0, 0.12);
+  --border-lime: 1px solid #CAFF00;
+  --border-blue: 2px solid #2B2BFF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Zero shadows, Zero gradients globally */
+*, *::before, *::after {
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+html, body {
+  background-color: #030303;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.4;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 390px Centered Mobile Frame */
+#root {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  background-color: var(--black);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-left: var(--border-subtle);
+  border-right: var(--border-subtle);
+}
+
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Custom Scrollbar for horizontal blob strip */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Brutalist Blobs & Shapes */
+.blob-shape-1 {
+  border-radius: 42% 58% 65% 35% / 55% 40% 60% 45%;
+}
+
+.blob-shape-2 {
+  border-radius: 60% 40% 45% 55% / 40% 60% 40% 60%;
+}
+
+.blob-shape-3 {
+  border-radius: 50% 50% 35% 65% / 60% 35% 65% 40%;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+/* Strikethrough completed task */
+.completed-task {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+
+/* Button Reset */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
