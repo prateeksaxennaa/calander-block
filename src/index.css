@@ -73,6 +73,175 @@ html, body {
   font-family: var(--font-main);
 }
 
+/* App Header Styling */
+.app-header {
+  background-color: var(--canvas-bg);
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header-user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.user-avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--card-dark);
+  color: var(--card-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.user-greeting-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-greeting-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.2;
+}
+
+.user-greeting-subtitle {
+  font-family: var(--font-main);
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.subtitle-divider {
+  color: var(--mint-dark);
+  opacity: 0.7;
+  font-weight: 700;
+}
+
+.buffer-status-pill {
+  margin-left: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.header-search-section {
+  flex: 1;
+  max-width: 380px;
+}
+
+.header-search-btn {
+  width: 100%;
+  background-color: var(--card-light);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-muted);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.header-search-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+}
+
+.kbd-shortcut-tag {
+  background-color: #F0F0F2;
+  color: var(--text-dark);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.header-actions-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.header-action-btn {
+  background-color: var(--card-light);
+  color: var(--text-dark);
+  border-radius: var(--radius-pill);
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+.header-ai-btn {
+  background-color: var(--card-dark);
+  color: var(--card-light);
+  border-radius: var(--radius-pill);
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.header-ai-btn:hover {
+  transform: translateY(-1px);
+}
+
+.header-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--card-light);
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
 /* Trantor Curved Tactile Cards */
 .trantor-card-light {
   background-color: var(--card-light);
@@ -115,7 +284,7 @@ html, body {
   color: var(--amber-dark);
 }
 
-/* Interlocking Dual Pill Controls (Transfer / Receive Pill style) */
+/* Interlocking Dual Pill Controls */
 .interlocking-pill-group {
   display: flex;
   align-items: center;
@@ -205,6 +374,46 @@ html, body {
 }
 
 @media (max-width: 767px) {
+  .app-header {
+    padding: 10px 14px;
+  }
+
+  .header-container {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header-user-section {
+    flex: 1;
+  }
+
+  .user-greeting-title {
+    font-size: 15px;
+  }
+
+  .user-greeting-subtitle {
+    font-size: 10px;
+  }
+
+  .buffer-status-pill {
+    display: none !important;
+  }
+
+  .header-search-section {
+    order: 3;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .header-search-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .search-placeholder {
+    font-size: 12px;
+  }
+
   .desktop-sidebar {
     display: none !important;
   }
@@ -218,9 +427,14 @@ html, body {
     display: flex !important;
   }
   .main-content-viewport {
-    padding: 16px !important;
+    padding: 14px !important;
     padding-bottom: 96px !important;
     max-width: 100% !important;
+  }
+
+  .trantor-card-light, .trantor-card-dark {
+    padding: 18px !important;
+    border-radius: 22px !important;
   }
 }
 

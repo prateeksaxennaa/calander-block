@@ -22,29 +22,37 @@ import { QuickAddSheet } from './components/QuickAddSheet';
 import { TimetableModal } from './components/TimetableModal';
 
 export const App: React.FC = () => {
-  // Tasks Persistence
+  // Filter out any stale sample mock data from localStorage if loaded
   const [tasks, setTasks] = useState<Task[]>(() => {
     const saved = localStorage.getItem('prateek_tasks_os');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) {}
+      try {
+        const parsed: Task[] = JSON.parse(saved);
+        // Exclude legacy mock tasks
+        return parsed.filter(t => !t.id.startsWith('task-0') && !t.id.startsWith('task-1') && !t.id.startsWith('task-2') && !t.id.startsWith('task-3') && !t.id.startsWith('task-4') && !t.id.startsWith('task-5') && !t.id.startsWith('task-6'));
+      } catch (e) {}
     }
     return INITIAL_TASKS;
   });
 
-  // Assignments Persistence
   const [assignments, setAssignments] = useState<Assignment[]>(() => {
     const saved = localStorage.getItem('prateek_assignments_os');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) {}
+      try {
+        const parsed: Assignment[] = JSON.parse(saved);
+        return parsed.filter(a => !a.id.startsWith('asgn-1') && !a.id.startsWith('asgn-2') && !a.id.startsWith('asgn-3') && !a.id.startsWith('asgn-4'));
+      } catch (e) {}
     }
     return INITIAL_ASSIGNMENTS;
   });
 
-  // Hourly Logs Persistence
   const [logs, setLogs] = useState<HourlyLogItem[]>(() => {
     const saved = localStorage.getItem('prateek_logs_os');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) {}
+      try {
+        const parsed: HourlyLogItem[] = JSON.parse(saved);
+        return parsed.filter(l => !l.id.startsWith('log-1') && !l.id.startsWith('log-2') && !l.id.startsWith('log-3') && !l.id.startsWith('log-4'));
+      } catch (e) {}
     }
     return INITIAL_HOURLY_LOGS;
   });
@@ -98,7 +106,7 @@ export const App: React.FC = () => {
   const handleAddTask = (taskData: Omit<Task, 'id' | 'created'>): Task => {
     const newTask: Task = {
       ...taskData,
-      id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      id: `user-task-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
       created: Date.now()
     };
     setTasks(prev => [newTask, ...prev]);
@@ -119,7 +127,7 @@ export const App: React.FC = () => {
   const handleAddAssignment = (asgnData: Omit<Assignment, 'id'>): Assignment => {
     const newAsgn: Assignment = {
       ...asgnData,
-      id: `asgn-${Date.now()}`
+      id: `user-asgn-${Date.now()}`
     };
     setAssignments(prev => [newAsgn, ...prev]);
     return newAsgn;
@@ -133,7 +141,7 @@ export const App: React.FC = () => {
   const handleAddHourlyLog = (logData: Omit<HourlyLogItem, 'id' | 'timestamp'>) => {
     const newLog: HourlyLogItem = {
       ...logData,
-      id: `log-${Date.now()}`,
+      id: `user-log-${Date.now()}`,
       timestamp: Date.now()
     };
     setLogs(prev => [newLog, ...prev]);
@@ -184,8 +192,8 @@ export const App: React.FC = () => {
       display: 'flex',
       flexDirection: 'column',
       minHeight: '100vh',
-      backgroundColor: 'var(--black)',
-      color: 'var(--white)'
+      backgroundColor: 'var(--canvas-bg)',
+      color: 'var(--text-dark)'
     }}>
       {/* Top Standard Header */}
       <Header
