@@ -27,7 +27,8 @@ export const TimetableModal: React.FC<TimetableModalProps> = ({
         position: 'fixed',
         inset: 0,
         zIndex: 2000,
-        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        backdropFilter: 'blur(8px)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
@@ -40,66 +41,53 @@ export const TimetableModal: React.FC<TimetableModalProps> = ({
         onClick={(e) => e.stopPropagation()}
         style={{
           width: '100%',
-          maxWidth: '390px',
-          height: '90vh',
-          backgroundColor: 'var(--black)',
-          borderTopLeftRadius: '24px',
-          borderTopRightRadius: '24px',
-          borderTop: '3px solid var(--lime)',
+          maxWidth: '460px',
+          height: '85vh',
+          backgroundColor: 'var(--card-light)',
+          borderTopLeftRadius: '28px',
+          borderTopRightRadius: '28px',
           display: 'flex',
           flexDirection: 'column',
-          color: 'var(--white)',
-          overflow: 'hidden'
+          color: 'var(--text-dark)',
+          overflow: 'hidden',
+          boxShadow: '0 -15px 50px rgba(0,0,0,0.15)'
         }}
       >
         {/* Header */}
         <div style={{
-          padding: '16px 20px',
-          borderBottom: 'var(--border-subtle)',
+          padding: '18px 20px',
+          borderBottom: '1px solid #EBEBEF',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between'
         }}>
           <div>
-            <div style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '16px',
-              fontWeight: 800,
-              color: 'var(--lime)',
-              letterSpacing: '0.04em'
-            }}>
-              SEC B (CSE) TIMETABLE
+            <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-dark)' }}>
+              Sec B (CSE) Timetable
             </div>
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '9px',
-              color: 'var(--text-dim)',
-              textTransform: 'uppercase'
-            }}>
-              JKLU ODD SEMESTER 2026-27
+            <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)' }}>
+              JKLU Odd Semester 2026-27
             </div>
           </div>
 
           <button
             onClick={onClose}
             style={{
-              color: 'var(--white)',
-              padding: '6px',
-              borderRadius: '50%',
-              backgroundColor: 'var(--grey2)'
+              color: 'var(--text-muted)',
+              cursor: 'pointer'
             }}
           >
-            <X size={18} />
+            <X size={20} />
           </button>
         </div>
 
         {/* Day Switcher Tabs */}
         <div style={{
           display: 'flex',
-          backgroundColor: 'var(--grey)',
-          padding: '6px 12px',
+          backgroundColor: '#F5F5F7',
+          padding: '8px 12px',
           gap: '6px',
-          borderBottom: 'var(--border-subtle)'
+          borderBottom: '1px solid #EBEBEF'
         }}>
           {days.map((day) => {
             const isActive = activeDay === day;
@@ -110,14 +98,14 @@ export const TimetableModal: React.FC<TimetableModalProps> = ({
                 style={{
                   flex: 1,
                   padding: '8px 0',
-                  fontFamily: 'var(--font-mono)',
                   fontSize: '12px',
                   fontWeight: 800,
-                  borderRadius: '8px',
-                  backgroundColor: isActive ? 'var(--lime)' : 'transparent',
-                  color: isActive ? 'var(--black)' : 'var(--text-dim)',
+                  borderRadius: 'var(--radius-pill)',
+                  backgroundColor: isActive ? 'var(--card-dark)' : 'transparent',
+                  color: isActive ? 'var(--card-light)' : 'var(--text-muted)',
                   textAlign: 'center',
-                  transition: 'all 0.15s ease'
+                  transition: 'all 0.15s ease',
+                  cursor: 'pointer'
                 }}
               >
                 {day}
@@ -139,56 +127,27 @@ export const TimetableModal: React.FC<TimetableModalProps> = ({
             <div
               key={slot.id}
               style={{
-                backgroundColor: 'var(--grey)',
-                borderRadius: '14px',
-                padding: '14px 16px',
-                borderLeft: `4px solid ${slot.color}`,
-                border: 'var(--border-subtle)',
+                backgroundColor: '#F7F7F9',
+                borderRadius: '20px',
+                padding: '16px 18px',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '8px'
               }}
             >
               {/* Slot Time & Type Badge */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '12px',
-                  fontWeight: 800,
-                  color: 'var(--lime)'
-                }}>
-                  <Clock size={13} /> {slot.time}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 800, color: 'var(--text-dark)' }}>
+                  <Clock size={14} color="var(--mint-dark)" /> {slot.time}
                 </div>
 
-                <span style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '9px',
-                  fontWeight: 800,
-                  padding: '3px 8px',
-                  borderRadius: '10px',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
-                  color: slot.color,
-                  textTransform: 'uppercase'
-                }}>
+                <span className="trantor-pill trantor-pill-mint" style={{ fontSize: '10px' }}>
                   {slot.type}
                 </span>
               </div>
 
               {/* Subject Title */}
-              <div style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '15px',
-                fontWeight: 800,
-                color: 'var(--white)',
-                lineHeight: 1.2
-              }}>
+              <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-dark)', lineHeight: 1.2 }}>
                 {slot.subject}
               </div>
 
@@ -197,13 +156,13 @@ export const TimetableModal: React.FC<TimetableModalProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                fontSize: '11px',
-                fontFamily: 'var(--font-mono)',
-                color: 'var(--text-dim)',
+                fontSize: '12px',
+                fontWeight: 600,
+                color: 'var(--text-muted)',
                 marginTop: '2px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <User size={12} color="var(--text-dim)" />
+                  <User size={13} color="var(--text-muted)" />
                   <span>{slot.faculty}</span>
                 </div>
 
@@ -211,13 +170,13 @@ export const TimetableModal: React.FC<TimetableModalProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  backgroundColor: 'var(--grey2)',
-                  padding: '2px 8px',
-                  borderRadius: '6px',
-                  color: 'var(--white)',
+                  backgroundColor: '#EBEBEF',
+                  padding: '4px 10px',
+                  borderRadius: 'var(--radius-pill)',
+                  color: 'var(--text-dark)',
                   fontWeight: 700
                 }}>
-                  <MapPin size={11} color="var(--lime)" />
+                  <MapPin size={12} color="var(--mint-dark)" />
                   <span>{slot.room}</span>
                 </div>
               </div>
@@ -226,16 +185,15 @@ export const TimetableModal: React.FC<TimetableModalProps> = ({
 
           {/* Lunch Notice */}
           <div style={{
-            backgroundColor: 'rgba(202, 255, 0, 0.05)',
-            border: '1px stroke var(--lime)',
-            borderRadius: '12px',
-            padding: '12px',
+            backgroundColor: 'var(--mint-light)',
+            borderRadius: '16px',
+            padding: '14px',
             textAlign: 'center',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
-            color: 'var(--lime)'
+            fontSize: '12px',
+            fontWeight: 800,
+            color: 'var(--mint-dark)'
           }}>
-            /// 12:50 PM - 2:00 PM — LUNCH BREAK & RECHARGE
+            ⏰ 12:50 PM - 2:00 PM — LUNCH BREAK & RECHARGE
           </div>
         </div>
       </div>

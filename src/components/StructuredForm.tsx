@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Task, CategoryType, PriorityType } from '../types';
-import { ArrowLeft, Plus, Check } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 
 interface StructuredFormProps {
   initialTask?: Task | null;
@@ -34,10 +34,10 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
     { id: 'other', label: 'OTHER' }
   ];
 
-  const priorities: { id: PriorityType; label: string; color: string }[] = [
-    { id: 'high', label: 'HIGH', color: '#FF3B30' },
-    { id: 'med', label: 'MED', color: 'var(--blue)' },
-    { id: 'low', label: 'LOW', color: 'var(--grey2)' }
+  const priorities: { id: PriorityType; label: string; pillClass: string }[] = [
+    { id: 'high', label: 'HIGH', pillClass: 'trantor-pill-amber' },
+    { id: 'med', label: 'MED', pillClass: 'trantor-pill-lavender' },
+    { id: 'low', label: 'LOW', pillClass: 'trantor-pill-mint' }
   ];
 
   const timeSlots = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, '0')}:00`);
@@ -60,21 +60,23 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
 
   return (
     <div style={{
-      backgroundColor: 'var(--white)',
-      color: 'var(--black)',
+      backgroundColor: 'var(--canvas-bg)',
+      color: 'var(--text-dark)',
       minHeight: '100vh',
-      padding: '20px',
+      padding: '24px 20px',
       display: 'flex',
       flexDirection: 'column',
+      maxWidth: '720px',
+      margin: '0 auto',
       position: 'relative',
       zIndex: 100
     }}>
-      {/* Top Nav: Full-width Black Pill with Back Arrow + Title */}
+      {/* Top Nav: Full-width Dark Pill with Back Arrow + Title */}
       <div style={{
-        backgroundColor: 'var(--black)',
-        color: 'var(--white)',
-        borderRadius: '30px',
-        padding: '12px 18px',
+        backgroundColor: 'var(--card-dark)',
+        color: 'var(--card-light)',
+        borderRadius: 'var(--radius-pill)',
+        padding: '12px 20px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -86,54 +88,32 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            color: 'var(--lime)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '12px',
-            fontWeight: 800
+            color: 'var(--mint)',
+            fontSize: '13px',
+            fontWeight: 800,
+            cursor: 'pointer'
           }}
         >
           <ArrowLeft size={18} /> BACK
         </button>
 
         <div style={{
-          fontFamily: 'var(--font-display)',
           fontSize: '15px',
           fontWeight: 800,
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase'
+          letterSpacing: '0.04em'
         }}>
-          {initialTask ? 'EDIT SPECIFICATIONS' : 'NEW TASK SPECIFICATIONS'}
+          {initialTask ? 'Edit Task Specifications' : 'New Task Specifications'}
         </div>
 
         <div style={{ width: '40px' }} />
       </div>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        {/* Row 1: Task Title & Header Label */}
-        <div style={{
-          borderBottom: '1px solid #D0D0CE',
-          paddingBottom: '16px'
-        }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '8px'
-          }}>
-            <span style={{
-              backgroundColor: 'var(--blue)',
-              color: 'var(--white)',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              fontWeight: 800,
-              padding: '4px 10px',
-              borderRadius: '12px',
-              textTransform: 'uppercase'
-            }}>
-              TASK NAME
-            </span>
-            <Plus size={16} color="var(--blue)" />
-          </div>
+      <form onSubmit={handleSubmit} className="trantor-card-light" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* Task Title */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)' }}>
+            TASK NAME
+          </label>
 
           <input
             type="text"
@@ -143,76 +123,61 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
             required
             style={{
               width: '100%',
-              fontFamily: 'var(--font-display)',
               fontSize: '20px',
               fontWeight: 800,
-              color: 'var(--black)',
-              padding: '8px 0',
-              borderBottom: '2px solid var(--black)'
+              color: 'var(--text-dark)',
+              backgroundColor: '#F5F5F7',
+              borderRadius: '16px',
+              padding: '14px 18px',
+              marginTop: '6px'
             }}
           />
         </div>
 
-        {/* Row 2: Sub-row three columns layout (Date, Time Slot, Priority) */}
+        {/* Sub-row three columns layout (Date, Time Slot, Priority) */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '12px',
-          borderBottom: '1px solid #D0D0CE',
-          paddingBottom: '16px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: '14px'
         }}>
           <div>
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              fontWeight: 700,
-              color: 'var(--text-dim)',
-              textTransform: 'uppercase',
-              marginBottom: '6px'
-            }}>
+            <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)' }}>
               DATE
-            </div>
+            </label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
               style={{
-                fontFamily: 'var(--font-mono)',
                 fontSize: '13px',
-                fontWeight: 800,
-                color: 'var(--black)',
-                backgroundColor: 'rgba(0,0,0,0.05)',
-                padding: '8px 6px',
-                borderRadius: '8px',
-                width: '100%'
+                fontWeight: 700,
+                color: 'var(--text-dark)',
+                backgroundColor: '#F5F5F7',
+                padding: '12px 14px',
+                borderRadius: '14px',
+                width: '100%',
+                marginTop: '4px'
               }}
             />
           </div>
 
           <div>
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              fontWeight: 700,
-              color: 'var(--text-dim)',
-              textTransform: 'uppercase',
-              marginBottom: '6px'
-            }}>
+            <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)' }}>
               HOUR SLOT
-            </div>
+            </label>
             <select
               value={timeSlot}
               onChange={(e) => setTimeSlot(e.target.value)}
               style={{
-                fontFamily: 'var(--font-mono)',
                 fontSize: '13px',
-                fontWeight: 800,
-                color: 'var(--black)',
-                backgroundColor: 'rgba(0,0,0,0.05)',
-                padding: '8px 6px',
-                borderRadius: '8px',
+                fontWeight: 700,
+                color: 'var(--text-dark)',
+                backgroundColor: '#F5F5F7',
+                padding: '12px 14px',
+                borderRadius: '14px',
                 width: '100%',
+                marginTop: '4px',
                 cursor: 'pointer'
               }}
             >
@@ -229,17 +194,10 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
           </div>
 
           <div>
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              fontWeight: 700,
-              color: 'var(--text-dim)',
-              textTransform: 'uppercase',
-              marginBottom: '6px'
-            }}>
+            <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)' }}>
               PRIORITY
-            </div>
-            <div style={{ display: 'flex', gap: '2px' }}>
+            </label>
+            <div style={{ display: 'flex', gap: '6px', marginTop: '4px' }}>
               {priorities.map((p) => (
                 <button
                   type="button"
@@ -247,15 +205,14 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
                   onClick={() => setPriority(p.id)}
                   style={{
                     flex: 1,
-                    padding: '8px 2px',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '10px',
+                    padding: '10px 4px',
+                    fontSize: '11px',
                     fontWeight: 800,
-                    borderRadius: '6px',
-                    backgroundColor: priority === p.id ? p.color : 'rgba(0,0,0,0.05)',
-                    color: priority === p.id ? 'var(--white)' : 'var(--black)',
-                    textTransform: 'uppercase',
-                    textAlign: 'center'
+                    borderRadius: 'var(--radius-pill)',
+                    backgroundColor: priority === p.id ? 'var(--card-dark)' : '#F0F0F2',
+                    color: priority === p.id ? 'var(--card-light)' : 'var(--text-dark)',
+                    textAlign: 'center',
+                    cursor: 'pointer'
                   }}
                 >
                   {p.label}
@@ -265,30 +222,11 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
           </div>
         </div>
 
-        {/* Row 3: Category Selection */}
-        <div style={{
-          borderBottom: '1px solid #D0D0CE',
-          paddingBottom: '16px'
-        }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '10px'
-          }}>
-            <span style={{
-              backgroundColor: 'var(--blue)',
-              color: 'var(--white)',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              fontWeight: 800,
-              padding: '4px 10px',
-              borderRadius: '12px',
-              textTransform: 'uppercase'
-            }}>
-              CATEGORY TAG
-            </span>
-          </div>
+        {/* Category Selection */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px', display: 'block' }}>
+            CATEGORY TAG
+          </label>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {categories.map((cat) => {
@@ -299,14 +237,13 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
                   key={cat.id}
                   onClick={() => setCategory(cat.id)}
                   style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '11px',
-                    fontWeight: 800,
-                    padding: '8px 14px',
-                    borderRadius: '16px',
-                    backgroundColor: isSelected ? 'var(--black)' : 'rgba(0,0,0,0.06)',
-                    color: isSelected ? 'var(--lime)' : 'var(--black)',
-                    textTransform: 'uppercase'
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    padding: '8px 16px',
+                    borderRadius: 'var(--radius-pill)',
+                    backgroundColor: isSelected ? 'var(--card-dark)' : '#F0F0F2',
+                    color: isSelected ? 'var(--mint)' : 'var(--text-dark)',
+                    cursor: 'pointer'
                   }}
                 >
                   {cat.label}
@@ -316,21 +253,11 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
           </div>
         </div>
 
-        {/* Row 4: Note / Description Field */}
-        <div style={{
-          borderBottom: '1px solid #D0D0CE',
-          paddingBottom: '16px'
-        }}>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            fontWeight: 700,
-            color: 'var(--text-dim)',
-            textTransform: 'uppercase',
-            marginBottom: '6px'
-          }}>
+        {/* Note / Description Field */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)' }}>
             SPECIFICATION NOTES
-          </div>
+          </label>
           <textarea
             rows={3}
             placeholder="Add detailed instructions, textbook pages, links..."
@@ -338,12 +265,12 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
             onChange={(e) => setNote(e.target.value)}
             style={{
               width: '100%',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '12px',
-              color: 'var(--black)',
-              backgroundColor: 'rgba(0,0,0,0.04)',
-              padding: '10px',
-              borderRadius: '8px',
+              fontSize: '13px',
+              color: 'var(--text-dark)',
+              backgroundColor: '#F5F5F7',
+              padding: '14px 18px',
+              borderRadius: '16px',
+              marginTop: '4px',
               resize: 'none'
             }}
           />
@@ -353,23 +280,21 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
         <button
           type="submit"
           style={{
-            backgroundColor: 'var(--black)',
-            color: 'var(--lime)',
-            fontFamily: 'var(--font-display)',
-            fontSize: '16px',
+            backgroundColor: 'var(--card-dark)',
+            color: 'var(--card-light)',
+            fontSize: '15px',
             fontWeight: 800,
             padding: '16px',
-            borderRadius: '14px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.06em',
+            borderRadius: 'var(--radius-pill)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            marginTop: '10px'
+            marginTop: '10px',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.12)'
           }}
         >
-          <Check size={20} strokeWidth={3} />
+          <Check size={20} strokeWidth={3} color="var(--mint)" />
           {initialTask ? 'SAVE SPECIFICATIONS' : 'CREATE TASK SPECIFICATION'}
         </button>
       </form>

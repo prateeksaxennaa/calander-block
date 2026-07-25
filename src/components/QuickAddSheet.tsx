@@ -43,7 +43,8 @@ export const QuickAddSheet: React.FC<QuickAddSheetProps> = ({
         position: 'fixed',
         inset: 0,
         zIndex: 1000,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        backdropFilter: 'blur(6px)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
@@ -57,13 +58,13 @@ export const QuickAddSheet: React.FC<QuickAddSheetProps> = ({
         onClick={(e) => e.stopPropagation()}
         style={{
           width: '100%',
-          maxWidth: '390px',
-          backgroundColor: 'var(--black)',
-          borderTopLeftRadius: '24px',
-          borderTopRightRadius: '24px',
-          borderTop: '2px solid var(--lime)',
-          padding: '20px 20px 32px 20px',
-          color: 'var(--white)'
+          maxWidth: '440px',
+          backgroundColor: 'var(--card-light)',
+          borderTopLeftRadius: '28px',
+          borderTopRightRadius: '28px',
+          padding: '24px 24px 36px 24px',
+          color: 'var(--text-dark)',
+          boxShadow: '0 -10px 40px rgba(0,0,0,0.15)'
         }}
       >
         {/* Header bar */}
@@ -73,53 +74,50 @@ export const QuickAddSheet: React.FC<QuickAddSheetProps> = ({
           justifyContent: 'space-between',
           marginBottom: '16px'
         }}>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
-            fontWeight: 800,
-            color: 'var(--lime)',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase'
-          }}>
-            /// QUICK TASK ADD ({selectedDate})
+          <div>
+            <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--text-dark)' }}>
+              Quick Task Entry
+            </div>
+            <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)' }}>
+              Targeting {selectedDate}
+            </div>
           </div>
 
           <button
             onClick={onClose}
             style={{
-              color: 'var(--text-dim)',
-              padding: '4px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+              color: 'var(--text-muted)',
+              cursor: 'pointer'
             }}
           >
             <X size={20} />
           </button>
         </div>
 
-        {/* Form Input Line + Add Lime Pill */}
-        <form onSubmit={handleSubmit} style={{ marginBottom: '14px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {/* Form Input Line */}
+        <form onSubmit={handleSubmit} style={{ marginBottom: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              backgroundColor: 'var(--grey)',
-              borderRadius: '30px',
-              padding: '6px 8px 6px 16px',
-              border: 'var(--border-subtle)'
+              backgroundColor: '#F5F5F7',
+              borderRadius: 'var(--radius-pill)',
+              padding: '6px 8px 6px 18px'
             }}>
               <input
                 type="text"
-                placeholder="Type engagement / task title here..."
+                placeholder="Type engagement / task title..."
                 value={inputTitle}
                 onChange={(e) => setInputTitle(e.target.value)}
                 autoFocus
                 style={{
                   flex: 1,
-                  fontFamily: 'var(--font-body)',
                   fontSize: '14px',
-                  color: 'var(--white)'
+                  fontWeight: 500,
+                  color: 'var(--text-dark)',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  outline: 'none'
                 }}
               />
 
@@ -127,21 +125,19 @@ export const QuickAddSheet: React.FC<QuickAddSheetProps> = ({
                 type="submit"
                 disabled={!inputTitle.trim()}
                 style={{
-                  backgroundColor: inputTitle.trim() ? 'var(--lime)' : 'var(--grey2)',
-                  color: inputTitle.trim() ? 'var(--black)' : 'var(--text-dim)',
-                  fontFamily: 'var(--font-mono)',
+                  backgroundColor: inputTitle.trim() ? 'var(--card-dark)' : '#E0E0E5',
+                  color: inputTitle.trim() ? 'var(--card-light)' : 'var(--text-muted)',
                   fontSize: '12px',
                   fontWeight: 800,
-                  padding: '8px 18px',
-                  borderRadius: '20px',
-                  textTransform: 'uppercase',
-                  transition: 'all 0.15s ease',
+                  padding: '10px 20px',
+                  borderRadius: 'var(--radius-pill)',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '4px'
+                  gap: '4px',
+                  cursor: 'pointer'
                 }}
               >
-                ADD <ArrowRight size={14} />
+                Add <ArrowRight size={14} />
               </button>
             </div>
 
@@ -153,10 +149,9 @@ export const QuickAddSheet: React.FC<QuickAddSheetProps> = ({
               padding: '0 8px'
             }}>
               <span style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '10px',
-                color: 'var(--text-dim)',
-                textTransform: 'uppercase'
+                fontSize: '11px',
+                fontWeight: 700,
+                color: 'var(--text-muted)'
               }}>
                 TARGET HOUR SLOT:
               </span>
@@ -164,14 +159,13 @@ export const QuickAddSheet: React.FC<QuickAddSheetProps> = ({
                 value={timeSlot}
                 onChange={(e) => setTimeSlot(e.target.value)}
                 style={{
-                  backgroundColor: 'var(--grey2)',
-                  color: 'var(--lime)',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  padding: '4px 8px',
-                  borderRadius: '6px',
-                  border: 'var(--border-subtle)'
+                  backgroundColor: '#F0F0F2',
+                  color: 'var(--text-dark)',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  padding: '6px 12px',
+                  borderRadius: 'var(--radius-pill)',
+                  border: 'none'
                 }}
               >
                 {Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, '0')}:00`).map(ts => {
@@ -197,9 +191,9 @@ export const QuickAddSheet: React.FC<QuickAddSheetProps> = ({
               onOpenStructuredForm();
             }}
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              color: 'var(--text-dim)',
+              fontSize: '12px',
+              fontWeight: 700,
+              color: 'var(--text-muted)',
               textDecoration: 'underline',
               cursor: 'pointer'
             }}

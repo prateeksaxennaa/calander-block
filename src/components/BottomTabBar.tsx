@@ -14,10 +14,10 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
   onOpenQuickAdd
 }) => {
   const tabs: { id: TabType; label: string }[] = [
-    { id: 'today', label: 'TODAY' },
-    { id: 'timeline', label: '24H MATRIX' },
-    { id: 'week', label: 'WEEK' },
-    { id: 'calendar', label: 'CALENDAR' }
+    { id: 'home', label: 'HOME' },
+    { id: 'timeline', label: 'MATRIX' },
+    { id: 'timetable', label: 'TIMETABLE' },
+    { id: 'assignments', label: 'ASSIGNMENTS' }
   ];
 
   return (
@@ -29,8 +29,8 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
       zIndex: 50,
       backgroundColor: 'var(--black)',
       borderTop: 'var(--border-subtle)',
-      paddingLeft: '20px',
-      paddingRight: '20px',
+      paddingLeft: '16px',
+      paddingRight: '16px',
       paddingTop: '10px',
       paddingBottom: '14px',
       display: 'flex',
@@ -42,7 +42,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '12px'
+        gap: '10px'
       }}>
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
@@ -53,13 +53,16 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
               style={{
                 fontFamily: 'var(--font-display)',
                 fontWeight: 700,
-                fontSize: '12px',
+                fontSize: '11px',
                 letterSpacing: '0.04em',
                 color: isActive ? 'var(--white)' : 'var(--text-dim)',
                 paddingBottom: '4px',
                 position: 'relative',
                 transition: 'color 0.15s ease',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
+                border: 'none',
+                backgroundColor: 'transparent',
+                cursor: 'pointer'
               }}
             >
               {tab.label}
@@ -79,27 +82,23 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
         })}
       </div>
 
-      {/* Quick Add FAB Button (Lime background, black icon) */}
       <button
         onClick={onOpenQuickAdd}
         title="Quick Add Task"
         style={{
-          width: '44px',
-          height: '44px',
+          width: '40px',
+          height: '40px',
           backgroundColor: 'var(--lime)',
           color: 'var(--black)',
-          borderRadius: '22px',
+          borderRadius: '20px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           border: 'none',
-          transition: 'transform 0.15s ease',
-          boxSizing: 'border-box'
+          cursor: 'pointer'
         }}
-        onMouseDown={(e) => (e.currentTarget.style.transform = 'scale(0.92)')}
-        onMouseUp={(e) => (e.currentTarget.style.transform = 'scale(1)')}
       >
-        <Plus size={24} strokeWidth={3} />
+        <Plus size={20} strokeWidth={3} />
       </button>
     </div>
   );
