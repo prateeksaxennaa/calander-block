@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, Sparkles, Calendar as CalendarIcon, Bell } from 'lucide-react';
 import type { BufferEngineMetrics } from '../types';
+import { OrdoLogo } from './OrdoLogo';
 
 interface HeaderProps {
   metrics: BufferEngineMetrics;
@@ -20,20 +21,8 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="header-container">
         {/* Brand & Greeting with User Avatar */}
         <div className="header-user-section">
-          {/* User Profile Avatar Circle */}
-          <div className="user-avatar-circle">
-            PS
-          </div>
-
-          <div className="user-greeting-box">
-            <div className="user-greeting-title">
-              <span>Hey, Prateek!</span>
-              <span>👋</span>
-            </div>
-            <div className="user-greeting-subtitle">
-              Academic Operating System <span className="subtitle-divider">///</span> JKLU 2026
-            </div>
-          </div>
+          {/* ORDO Logo & Tagline */}
+          <OrdoLogo size={34} showText={true} showTagline={true} theme="dark" />
 
           {/* Live Buffer Status Pill */}
           <div className="trantor-pill trantor-pill-mint buffer-status-pill">

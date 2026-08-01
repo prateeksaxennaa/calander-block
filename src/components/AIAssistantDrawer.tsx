@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Send } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 import type { Task, Assignment, AICommandResult } from '../types';
 import { parseNaturalLanguageInput } from '../services/aiEngine';
+import { OrdoLogo } from './OrdoLogo';
 
 interface AIAssistantDrawerProps {
   isOpen: boolean;
@@ -133,13 +134,15 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
           backgroundColor: 'var(--card-light)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Sparkles size={20} color="var(--mint-dark)" />
+            <OrdoLogo size={24} showText={false} />
             <div style={{
+              fontFamily: 'var(--font-display)',
               fontSize: '15px',
               fontWeight: 800,
-              color: 'var(--text-dark)'
+              color: 'var(--text-dark)',
+              letterSpacing: '0.04em'
             }}>
-              AI Time Assistant
+              ORDO AI Copilot
             </div>
           </div>
 

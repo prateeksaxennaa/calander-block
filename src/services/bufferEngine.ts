@@ -10,9 +10,9 @@ export function getTodayDateString(): string {
   return `${year}-${month}-${day}`;
 }
 
-export function getDayOfWeekFromDateStr(dateStr: string): DayOfWeek | 'MON' {
+export function getDayOfWeekFromDateStr(dateStr: string): DayOfWeek | null {
   const dateObj = new Date(dateStr + 'T00:00:00');
-  const dayIndex = dateObj.getDay(); // 0 = Sun, 1 = Mon ...
+  const dayIndex = dateObj.getDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
   const map: Record<number, DayOfWeek> = {
     1: 'MON',
     2: 'TUE',
@@ -20,7 +20,7 @@ export function getDayOfWeekFromDateStr(dateStr: string): DayOfWeek | 'MON' {
     4: 'THU',
     5: 'FRI'
   };
-  return map[dayIndex] || 'MON';
+  return map[dayIndex] || null;
 }
 
 export function calculateBufferMetrics(
@@ -30,9 +30,9 @@ export function calculateBufferMetrics(
   routine: DailyRoutine = DEFAULT_ROUTINE
 ): BufferEngineMetrics {
   const dayOfWeek = getDayOfWeekFromDateStr(dateStr);
-  const classesToday = WEEKLY_TIMETABLE[dayOfWeek] || [];
+  const classesToday = dayOfWeek ? (WEEKLY_TIMETABLE[dayOfWeek] || []) : [];
 
-  // Calculate fixed class hours for this day
+  // Calculate fixed class hours for this day (0 for Saturday & Sunday)
   let classHours = 0;
   classesToday.forEach(c => {
     const parts = c.time.split('-');

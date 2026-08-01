@@ -33,7 +33,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const [currentActivityInput, setCurrentActivityInput] = useState('');
 
   const dayOfWeek = getDayOfWeekFromDateStr(selectedDate);
-  const classesToday = WEEKLY_TIMETABLE[dayOfWeek] || [];
+  const classesToday = dayOfWeek ? (WEEKLY_TIMETABLE[dayOfWeek] || []) : [];
   const todayTasks = tasks.filter(t => t.date === selectedDate);
   const pendingAssignments = assignments.filter(a => a.status !== 'completed');
 

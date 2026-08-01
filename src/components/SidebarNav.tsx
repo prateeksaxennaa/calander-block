@@ -1,6 +1,7 @@
 import React from 'react';
 import type { TabType } from '../types';
 import { Home, Clock, Calendar, BookOpen, FileText, BarChart2, Plus, Sparkles, ShieldCheck } from 'lucide-react';
+import { OrdoLogo } from './OrdoLogo';
 
 interface SidebarNavProps {
   activeTab: TabType;
@@ -57,6 +58,10 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({
           flexDirection: 'column',
           gap: '6px'
         }}>
+          {/* ORDO Logo Header */}
+          <div style={{ padding: '0 8px 14px 8px', borderBottom: '1px solid var(--card-subtle)', marginBottom: '8px' }}>
+            <OrdoLogo size={28} showText={true} showTagline={false} theme="dark" />
+          </div>
           <div style={{
             fontSize: '11px',
             fontWeight: 800,
