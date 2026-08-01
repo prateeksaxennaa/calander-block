@@ -2,6 +2,14 @@ import type { Task, Assignment, BufferEngineMetrics, DailyRoutine, WorkloadStatu
 import { WEEKLY_TIMETABLE, type DayOfWeek } from '../data/timetable';
 import { DEFAULT_ROUTINE } from '../data/initialData';
 
+export function getTodayDateString(): string {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export function getDayOfWeekFromDateStr(dateStr: string): DayOfWeek | 'MON' {
   const dateObj = new Date(dateStr + 'T00:00:00');
   const dayIndex = dateObj.getDay(); // 0 = Sun, 1 = Mon ...
@@ -108,6 +116,51 @@ export function calculateBufferMetrics(
     status,
     statusMessage
   };
+}
+
+export function getWeeklyChartData(
+  targetDateStr: string,
+  tasks: Task[],
+  assignments: Assignment[],
+  routine: DailyRoutine = DEFAULT_ROUTINE
+) {
+  const targetDate = new Date(targetDateStr + 'T00:00:00');
+  const dayIndex = targetDate.getDay(); // 0 = Sun, 1 = Mon ...
+  // Calculate Monday of the target week
+  const diffToMon = dayIndex === 0 ? -6 : 1 - dayIndex;
+  const monday = new Date(targetDate);
+  monday.setDate(targetDate.getDate() + diffToMon);
+
+  const daysLabel: Array<{ label: string; offset: number }> = [
+    { label: 'MON', offset: 0 },
+    { label: 'TUE', offset: 1 },
+    { label: 'WED', offset: 2 },
+    { label: 'THU', offset: 3 },
+    { label: 'FRI', offset: 4 },
+    { label: 'SAT', offset: 5 },
+    { label: 'SUN', offset: 6 }
+  ];
+
+  const todayStr = getTodayDateString();
+
+  return daysLabel.map(d => {
+    const curDate = new Date(monday);
+    curDate.setDate(monday.getDate() + d.offset);
+    const yyyy = curDate.getFullYear();
+    const mm = String(curDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(curDate.getDate()).padStart(2, '0');
+    const dateIso = `${yyyy}-${mm}-${dd}`;
+
+    const metrics = calculateBufferMetrics(dateIso, tasks, assignments, routine);
+    return {
+      day: d.label,
+      dateStr: dateIso,
+      buffer: metrics.freeBufferHours,
+      load: metrics.usedHours,
+      isToday: dateIso === todayStr,
+      isSelected: dateIso === targetDateStr
+    };
+  });
 }
 
 export function formatHoursMins(decimalHours: number): string {

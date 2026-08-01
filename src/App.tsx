@@ -3,7 +3,7 @@ import type { Task, Assignment, HourlyLogItem, TabType, DailyRoutine } from './t
 import { INITIAL_TASKS } from './data/academic';
 import { INITIAL_ASSIGNMENTS, INITIAL_HOURLY_LOGS, DEFAULT_ROUTINE } from './data/initialData';
 import { UNIVERSITY_ACADEMIC_CALENDAR } from './data/universityCalendar';
-import { calculateBufferMetrics } from './services/bufferEngine';
+import { calculateBufferMetrics, getTodayDateString } from './services/bufferEngine';
 import type { DayOfWeek } from './data/timetable';
 
 // Components
@@ -61,7 +61,7 @@ export const App: React.FC = () => {
   const [routine] = useState<DailyRoutine>(DEFAULT_ROUTINE);
 
   // App Navigation & Date State
-  const [selectedDate, setSelectedDate] = useState<string>('2026-07-24');
+  const [selectedDate, setSelectedDate] = useState<string>(getTodayDateString());
   const [activeTab, setActiveTab] = useState<TabType>('home');
 
   // Modals State

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Task, CategoryType, PriorityType } from '../types';
 import { ArrowLeft, Check } from 'lucide-react';
+import { getTodayDateString } from '../services/bufferEngine';
 
 interface StructuredFormProps {
   initialTask?: Task | null;
@@ -18,7 +19,7 @@ export const StructuredForm: React.FC<StructuredFormProps> = ({
   onCancel
 }) => {
   const [title, setTitle] = useState(initialTask?.title || '');
-  const [date, setDate] = useState(initialTask?.date || defaultDate || '2026-07-24');
+  const [date, setDate] = useState(initialTask?.date || defaultDate || getTodayDateString());
   const [timeSlot, setTimeSlot] = useState<string>(initialTask?.timeSlot || defaultTimeSlot || '18:00');
   const [category, setCategory] = useState<CategoryType>(initialTask?.category || 'study');
   const [priority, setPriority] = useState<PriorityType>(initialTask?.priority || 'high');

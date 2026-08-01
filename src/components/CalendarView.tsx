@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { Task } from '../types';
 import { ACADEMIC } from '../data/academic';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { getTodayDateString } from '../services/bufferEngine';
 
 interface CalendarViewProps {
   tasks: Task[];
@@ -188,7 +189,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
         {Array.from({ length: totalDaysInMonth }).map((_, idx) => {
           const dayNum = idx + 1;
           const dateStr = getDateStr(dayNum);
-          const isToday = dateStr === '2026-07-24';
+          const isToday = dateStr === getTodayDateString();
           const isSelected = dateStr === selectedDate;
 
           const dayTaskList = tasks.filter(t => t.date === dateStr);

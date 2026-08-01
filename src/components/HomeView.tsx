@@ -3,7 +3,7 @@ import type { Task, Assignment, BufferEngineMetrics, HourlyLogItem } from '../ty
 import { BufferGauge } from './BufferGauge';
 import { ArrowRight, MapPin, CheckCircle, Activity, TrendingUp } from 'lucide-react';
 import { WEEKLY_TIMETABLE } from '../data/timetable';
-import { getDayOfWeekFromDateStr } from '../services/bufferEngine';
+import { getDayOfWeekFromDateStr, getWeeklyChartData } from '../services/bufferEngine';
 
 interface HomeViewProps {
   selectedDate: string;
@@ -56,16 +56,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
     setCurrentActivityInput('');
   };
 
-  // Mock weekly buffer chart data (matching Trantor bar chart style)
-  const weeklyChartData = [
-    { day: 'MON', buffer: 4.5, load: 7.5 },
-    { day: 'TUE', buffer: 2.0, load: 9.0 },
-    { day: 'WED', buffer: 5.0, load: 6.0 },
-    { day: 'THU', buffer: 3.5, load: 8.0 },
-    { day: 'FRI', buffer: 3.25, load: 7.5 },
-    { day: 'SAT', buffer: 6.5, load: 4.0 },
-    { day: 'SUN', buffer: 7.0, load: 3.0 }
-  ];
+  // Dynamic weekly buffer chart data
+  const weeklyChartData = getWeeklyChartData(selectedDate, tasks, assignments);
 
   return (
     <div style={{ color: 'var(--text-dark)', maxWidth: '1000px', margin: '0 auto' }}>
@@ -108,8 +100,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
           borderRadius: 'var(--radius-inner)'
         }}>
           {weeklyChartData.map((item, index) => {
-            const isToday = item.day === 'FRI';
-            const barHeight = (item.buffer / 8) * 100;
+            const isToday = item.isToday;
+            const barHeight = Math.min(100, Math.max(12, (item.buffer / 10) * 100));
             return (
               <div key={index} style={{
                 display: 'flex',

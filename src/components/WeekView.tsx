@@ -2,6 +2,7 @@ import React from 'react';
 import type { Task } from '../types';
 import { ACADEMIC } from '../data/academic';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { getTodayDateString } from '../services/bufferEngine';
 
 interface WeekViewProps {
   tasks: Task[];
@@ -30,7 +31,7 @@ export const WeekView: React.FC<WeekViewProps> = ({
       const dateStr = d.toISOString().split('T')[0];
       const dayName = d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
       const dayNum = String(d.getDate()).padStart(2, '0');
-      const isToday = dateStr === '2026-07-24'; // Current system date or device date
+      const isToday = dateStr === getTodayDateString();
 
       weekDays.push({ dateStr, dayName, dayNum, isToday });
     }

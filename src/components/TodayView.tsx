@@ -3,6 +3,7 @@ import type { Task, CategoryType } from '../types';
 import { WEEKLY_TIMETABLE } from '../data/timetable';
 import type { DayOfWeek } from '../data/timetable';
 import { ChevronDown, Check, Trash2, Calendar, AlertCircle, Clock, MapPin, BookOpen } from 'lucide-react';
+import { getTodayDateString } from '../services/bufferEngine';
 
 interface TodayViewProps {
   tasks: Task[];
@@ -167,9 +168,9 @@ export const TodayView: React.FC<TodayViewProps> = ({
               cursor: 'pointer'
             }}
           />
-          {selectedDate !== '2026-07-24' && (
+          {selectedDate !== getTodayDateString() && (
             <button
-              onClick={() => onDateChange('2026-07-24')}
+              onClick={() => onDateChange(getTodayDateString())}
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: '10px',
